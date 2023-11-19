@@ -3,6 +3,10 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+AUTH_USER_MODEL = 'users.Account'
+AUTHENTICATION_BACKENDS = [
+    'api.users.backend.Authentication'
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -11,6 +15,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'api.users',
+    'api.catalog',
 ]
 
 MIDDLEWARE = [
@@ -23,7 +29,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'app.urls'
+ROOT_URLCONF = 'project.urls'
 
 TEMPLATES = [
     {
@@ -41,7 +47,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'app.wsgi.application'
+WSGI_APPLICATION = 'project.wsgi.application'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
