@@ -9,12 +9,10 @@ from .models import Category, ImagesProduct, Product
 admin.site.empty_value_display = 'Unknown'
 
 
-class CategoryAdmin(MPTTModelAdmin):
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
     search_fields = ['name']
     mptt_level_indent = 25
-
-
-admin.site.register(Category, CategoryAdmin)
 
 
 class ImagesInlineAdmin(admin.TabularInline):
@@ -24,11 +22,13 @@ class ImagesInlineAdmin(admin.TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['title', 'price', 'banner']
+    list_display = ['get_img_banner', 'title', 'price']
+    list_display_links = ['get_img_banner', 'title']
     search_fields = ['title']
     autocomplete_fields = ['categories']
     list_per_page = 5
+    inlines = [ImagesInlineAdmin]
 
-    def banner(self, obj):
-        return mark_safe(f'<image src={obj.banner.url}/>')
+    def get_img_banner(self, obj):
+        return mark_safe(f'<image width="70" height="70" src={obj.banner.url}/>')
 

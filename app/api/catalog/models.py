@@ -8,13 +8,13 @@ def upload_banner(obj, filename):
 
 
 def upload_images(obj, filename):
-    return f'{obj.product.title}/{filename}'
+    return f'{obj.products.title}/{filename}'
 
 
 class Product(models.Model):
     title = models.CharField(verbose_name='Title', max_length=69, unique=True)
     description = models.TextField(verbose_name='Description')
-    banner = models.ImageField(verbose_name='Banner')
+    banner = models.ImageField(verbose_name='Banner', upload_to=upload_banner)
     price = models.DecimalField(verbose_name='Price', max_digits=10, decimal_places=2)
     quantity = models.IntegerField(verbose_name='Quantity')
     categories = models.ManyToManyField('Category', verbose_name='categories')
@@ -31,7 +31,7 @@ class Product(models.Model):
         default_related_name = 'products'
 
     def __str__(self):
-        return str(self.title)
+        return str(self.title).capitalize()
 
 
 class Category(MPTTModel):
@@ -43,6 +43,9 @@ class Category(MPTTModel):
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
 
+    def __str__(self):
+        return str(self.name).capitalize()
+
 
 class ImagesProduct(models.Model):
     image = models.ImageField(verbose_name='Image', upload_to=upload_images)
@@ -53,6 +56,9 @@ class ImagesProduct(models.Model):
         verbose_name = 'Product`s image'
         verbose_name_plural = 'Product`s images'
         default_related_name = 'images'
+
+    def __str__(self):
+        return str(self.image.name)
 
 
 
