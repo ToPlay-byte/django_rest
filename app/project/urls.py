@@ -6,6 +6,10 @@ from django.contrib import admin
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 
+
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
+
 schema_view = get_schema_view(
     openapi.Info(
         title='API documentation',
@@ -19,7 +23,9 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/catalog/', include('api.catalog.urls')),
-    path('swagger', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-ui')
+    path('swagger', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-ui'),
+    path('api/auth/', include('djoser.urls')),
+    path('api/auth/', include('djoser.urls.jwt'))
 ]
 
 if settings.DEBUG:

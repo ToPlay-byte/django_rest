@@ -58,7 +58,7 @@ class ImagesProduct(models.Model):
         default_related_name = 'images'
 
     def __str__(self):
-        return str(self.image.name)
+        return str(self.image.url)
 
 
 
