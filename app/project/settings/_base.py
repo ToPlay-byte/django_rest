@@ -30,6 +30,8 @@ SIMPLE_JWT = {
 }
 
 INSTALLED_APPS = [
+    'jet',
+    'jet.dashboard',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +44,8 @@ INSTALLED_APPS = [
     'api.users',
     'api.catalog'
 ]
+
+JET_SIDE_MENU_COMPACT = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

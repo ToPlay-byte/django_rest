@@ -21,6 +21,8 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
+    path('jet/', include('jet.urls', 'jet')),
+    path('jet/dashboard', include('jet.dashboard.urls', 'jet-dashboard')),
     path('admin/', admin.site.urls),
     path('api/catalog/', include('api.catalog.urls')),
     path('swagger', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-ui'),
