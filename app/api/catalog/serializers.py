@@ -1,18 +1,24 @@
-from rest_framework.serializers import ModelSerializer, SlugRelatedField
+from rest_framework import serializers
 
 from .models import Product, Category, ImagesProduct
 
 
-class ProductSerializer(ModelSerializer):
-    images = SlugRelatedField(many=True, slug_field='name', read_only=True)
+class ImagesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ImagesProduct
+        fields = ['path']
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    images = ImagesSerializer(many=True)
 
     class Meta:
         model = Product
-        fields = '__all__'
+        exclude = ['favourite_by']
 
 
-class CategorySerializer(ModelSerializer):
-    parent = SlugRelatedField(many=True, slug_field='name', read_only=True)
+class CategorySerializer(serializers.ModelSerializer):
+    parent = serializers.SlugRelatedField(many=True, slug_field='name', read_only=True)
 
     class Meta:
         model = Category

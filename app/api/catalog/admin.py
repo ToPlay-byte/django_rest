@@ -24,6 +24,7 @@ class ImagesInlineAdmin(admin.TabularInline):
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['get_img_banner', 'title', 'price']
     list_display_links = ['get_img_banner', 'title']
+    exclude = ['favourite_by']
     search_fields = ['title']
     autocomplete_fields = ['categories']
     list_per_page = 5

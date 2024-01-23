@@ -1,6 +1,7 @@
 from mptt.models import MPTTModel, TreeForeignKey
 
 from django.db import models
+from django.contrib.auth import get_user_model
 
 
 def upload_banner(obj, filename):
@@ -11,6 +12,9 @@ def upload_images(obj, filename):
     return f'{obj.products.title}/{filename}'
 
 
+User = get_user_model()
+
+
 class Product(models.Model):
     title = models.CharField(verbose_name='Title', max_length=69, unique=True)
     description = models.TextField(verbose_name='Description')
@@ -19,6 +23,10 @@ class Product(models.Model):
     quantity = models.IntegerField(verbose_name='Quantity')
     categories = models.ManyToManyField('Category', verbose_name='categories')
     characters = models.JSONField(verbose_name='Characters')
+    favourite_by = models.ManyToManyField(
+        User, related_query_name='favorite', related_name='favourites',
+        default=None, blank=True
+    )
 
     class Meta:
         db_table = 'products'
@@ -48,7 +56,7 @@ class Category(MPTTModel):
 
 
 class ImagesProduct(models.Model):
-    image = models.ImageField(verbose_name='Image', upload_to=upload_images)
+    path = models.ImageField(verbose_name='Image', upload_to=upload_images)
     products = models.ForeignKey('Product', verbose_name='Select the product', on_delete=models.CASCADE)
 
     class Meta:
