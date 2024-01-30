@@ -1,5 +1,3 @@
-import os.path
-
 from ._base import *
 
 

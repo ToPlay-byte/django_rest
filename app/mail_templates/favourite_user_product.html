@@ -1,0 +1,21 @@
+{% extends 'base.tpl' %}
+
+
+{% block subject %}
+    Hi. We get something for you
+{% endblock %}
+
+{% block html %}
+    <div style="margin: 30px 0 30px">
+        <div
+            style="background-color: red; padding: 30px; color: white;font-size: 18px;">
+            {{product.title}} already exists!
+        </div>
+        <div style="margin: 15px 0 15px">You can pay it for 13$</div>
+        <a
+            style="margin: 20px 0 0 15px;padding: 20px; background-color: red; color: white; display: inline-block;"
+            href="http://localhost:8000/{{product.get_absolute_url}}">
+            Buy it
+        </a>
+    </div>
+{% endblock %}

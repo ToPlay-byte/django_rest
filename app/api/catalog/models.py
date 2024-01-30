@@ -1,5 +1,7 @@
 from mptt.models import MPTTModel, TreeForeignKey
 
+from pytils.translit import slugify
+
 from django.db import models
 from django.contrib.auth import get_user_model
 
@@ -27,6 +29,7 @@ class Product(models.Model):
         User, related_query_name='favorite', related_name='favourites',
         default=None, blank=True
     )
+    slug = models.SlugField(editable=False, blank=True)
 
     class Meta:
         db_table = 'products'
@@ -38,8 +41,15 @@ class Product(models.Model):
         ]
         default_related_name = 'products'
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return str(self.title).capitalize()
+
+    def get_absolute_url(self):
+        return f'shop/catalog/{self.slug}'
 
 
 class Category(MPTTModel):
@@ -66,7 +76,7 @@ class ImagesProduct(models.Model):
         default_related_name = 'images'
 
     def __str__(self):
-        return str(self.image.url)
+        return str(self.path.url)
 
 
 
