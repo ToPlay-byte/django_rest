@@ -9,14 +9,30 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 AUTH_USER_MODEL = 'users.Account'
 AUTHENTICATION_BACKENDS = [
-    'api.users.backend.Authentication'
+    'social_core.backends.google.GoogleOAuth2',
+    'drf_social_oauth2.backends.DjangoOAuth2',
+    'api.users.backend.Authentication',
 ]
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile'
+]
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication'
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        'drf_social_oauth2.authentication.SocialAuthentication',
     ]
 }
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile',
+]
 
 DJOSER = {
     'LOGIN_FIELD': 'email',
@@ -44,6 +60,9 @@ INSTALLED_APPS = [
     'django_celery_results',
     'mail_templated',
     'rest_framework',
+    'oauth2_provider',
+    'social_django',
+    'drf_social_oauth2',
     'djoser',
     'drf_yasg',
     'api.users',
@@ -71,10 +90,13 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },

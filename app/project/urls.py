@@ -27,7 +27,8 @@ urlpatterns = [
     path('api/catalog/', include('api.catalog.urls')),
     path('swagger', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-ui'),
     path('api/auth/', include('djoser.urls')),
-    path('api/auth/', include('djoser.urls.jwt'))
+    path('api/auth/', include('djoser.urls.jwt')),
+    path('api/auth/', include('drf_social_oauth2.urls'))
 ]
 
 if settings.DEBUG:
