@@ -6,7 +6,7 @@ DEBUG = True
 
 STATIC_URL = 'static/'
 
-STATICDIRS_FILES = [
-    os.path.join(BASE_DIR, 'frontend')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'frontend/frontend/dist/')
 ]
 

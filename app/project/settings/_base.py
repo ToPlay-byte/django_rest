@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'drf_social_oauth2',
     'djoser',
     'drf_yasg',
+    'frontend.settings',
     'api.users',
     'api.catalog'
 ]
@@ -86,7 +87,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'mail_templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'mail_templates'), os.path.join(BASE_DIR, 'frontend/frontend/dist')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
